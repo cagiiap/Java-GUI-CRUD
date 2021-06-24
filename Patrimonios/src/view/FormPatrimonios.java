@@ -112,7 +112,7 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 		texto.setText(listar());
 	}
 	
-	private static String listar() {
+	private String listar() {
 		String acumulador = "ID\tData\tEquipamento\tValor\n";
 		for (ItemPatrimonio it: ProcessaPatrimonios.patrimonios) {
 			acumulador += it.toString();

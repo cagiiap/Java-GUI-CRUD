@@ -17,7 +17,7 @@ public class ProcessaPatrimonios {
 	}
 	
 	public static boolean salvar() {
-		if (pd.salvar(patrimonios)) {
+		if (PatrimonioDAO.salvar(patrimonios)) {
 			return true;
 		}else{
 			return false;
