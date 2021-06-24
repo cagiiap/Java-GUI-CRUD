@@ -1,15 +1,16 @@
 package model;
 
 public class ItemPatrimonio {
-	String data;
-	String equipamento;
-	int id;
-	double valor;
+	private String data;
+	private String equipamento;
+	private int id;
+	private double valor;
+	
 	
 	public ItemPatrimonio(){	
 	}
 
-	public ItemPatrimonio(String data, String equipamento, int id, double valor){
+	public ItemPatrimonio(int id, String data, String equipamento, double valor){
 		this.data = data;
 		this.equipamento = equipamento;
 		this.id = id;
@@ -50,6 +51,6 @@ public class ItemPatrimonio {
 
 	@Override
 	public String toString() {
-		return "Patrimonio [data=" + data + ", equipamento=" + equipamento + ", id=" + id + ", valor=" + valor + "]";
+		return data + "\t" + equipamento + "\t" + id + "\t" + valor + "\n";
 	}
 }

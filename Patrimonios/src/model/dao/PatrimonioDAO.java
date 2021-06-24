@@ -5,15 +5,20 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import controller.ProcessaPatrimonios;
 import model.ItemPatrimonio;
 
 public class PatrimonioDAO {
 	private ItemPatrimonio item;
 	private ArrayList<ItemPatrimonio> itens;
 	private BufferedReader br;
-	private BufferedWriter bw;
-	private String arquivo = "./bd/patrimonio.csv";
+	private static BufferedWriter bw;
+	private static String arquivo = "./bd/patrimonio.csv";
+
+
 
 	public ArrayList<ItemPatrimonio> abrir() {
 		itens = new ArrayList<>();
@@ -23,7 +28,7 @@ public class PatrimonioDAO {
 			String line = "";
 			while ((line = br.readLine()) != null) {
 				String[] line_true = line.split(";");
-				item = new ItemPatrimonio(line_true[0], line_true[1], Integer.valueOf(line_true[2]),
+				item = new ItemPatrimonio(Integer.valueOf(line_true[0]), line_true[1], line_true[2],
 						Double.parseDouble(line_true[3]));
 				itens.add(item);
 			}
@@ -34,7 +39,7 @@ public class PatrimonioDAO {
 		return itens;
 	}
 
-	public boolean salvar(ArrayList<ItemPatrimonio> it) {
+	public static boolean salvar(ArrayList<ItemPatrimonio> it) {
 		try {
 			bw = new BufferedWriter(new FileWriter(arquivo, false));
 			for (ItemPatrimonio i : it) {
@@ -47,4 +52,6 @@ public class PatrimonioDAO {
 			return false;
 		}
 	}
+	
+
 }
