@@ -6,7 +6,6 @@ public class ItemPatrimonio {
 	private int id;
 	private double valor;
 	
-	
 	public ItemPatrimonio(){	
 	}
 

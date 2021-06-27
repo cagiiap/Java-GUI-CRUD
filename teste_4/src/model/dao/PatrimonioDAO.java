@@ -5,10 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import controller.ProcessaPatrimonios;
 import model.ItemPatrimonio;
 
 public class PatrimonioDAO {
@@ -39,7 +36,6 @@ public class PatrimonioDAO {
 	public static boolean salvar(ArrayList<ItemPatrimonio> it) {
 		try {
 			bw = new BufferedWriter(new FileWriter(arquivo, false));
-			//bw.write("ID;Data;Equipamento;Valor\n");
 			for (ItemPatrimonio i: it) {
 				bw.write(i.toCsv());
 			}
