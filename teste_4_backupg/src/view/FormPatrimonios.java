@@ -1,11 +1,11 @@
 package view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 import controller.ProcessaPatrimonios;
 import model.ItemPatrimonio;
-import model.dao.ConexaoDAO;
 import model.dao.PatrimonioDAO;
 
 public class FormPatrimonios extends JFrame implements ActionListener {
@@ -28,7 +27,7 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 	private JPanel painel;
 
 	private JTextField id, equipamento, valor;
-	private JButton salvar, Cancelar, adicionar, alterar, excluir, listarPeriodo, btnNewButton;
+	private JButton salvar, excluir, adicionar, limpar, listarPeriodo, alterar;
 	private static JDateChooser date_chooser;
 	private DefaultTableModel model;
 	private Object[] row;
@@ -54,6 +53,17 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 		table.setRowHeight(30);
 		table.setAutoCreateRowSorter(true);
 		table.setModel(model);
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int i = table.getSelectedRow();
+				int indice = table.getSelectedRow();
+
+				id.setText(table.getValueAt(indice, 0).toString());
+				date_chooser.setDateFormatString(table.getValueAt(indice, 1).toString());
+				equipamento.setText(table.getValueAt(i, 2).toString());
+				valor.setText(table.getValueAt(i, 3).toString());
+			}
+		});
 
 		JScrollPane pane = new JScrollPane(table);
 		pane.setForeground(Color.RED);
@@ -64,6 +74,7 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 		row = new Object[4];
 		Object[] columns = { "id", "data", "Equipamentos", "Valor" };
 		model.setColumnIdentifiers(columns);
+
 		// Adicionando dados do arquivo csv na tela;
 		for (ItemPatrimonio it : ProcessaPatrimonios.patrimonios) {
 			row[0] = it.getId();
@@ -74,12 +85,34 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 		}
 
 		// Botões;
-		btnNewButton = new JButton("Adicionar");
-		btnNewButton.setBounds(150, 430, 120, 20);
-		btnNewButton.setFocusable(false);
-		painel.add(btnNewButton);
-		btnNewButton.addActionListener(this);
-		btnNewButton.addActionListener(new ActionListener() {
+		salvar = new JButton("Salvar");
+		salvar.setBounds(20, 430, 120, 30);
+		salvar.setFocusable(false);
+		painel.add(salvar);
+		salvar.addActionListener(this);
+
+		excluir = new JButton("Excluir");
+		excluir.setBounds(300, 430, 120, 30);
+		excluir.setFocusable(false);
+		painel.add(excluir);
+		excluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ProcessaPatrimonios.patrimonios.remove(table.getSelectedRow());
+					model.removeRow(table.getSelectedRow());
+					ProcessaPatrimonios.salvar();
+					JOptionPane.showMessageDialog(null, "Item removido com sucesso");
+				} catch (Exception error) {
+					JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir os dados");
+				}
+			}
+		});
+
+		adicionar = new JButton("Adicionar");
+		adicionar.setBounds(150, 430, 120, 20);
+		adicionar.setFocusable(false);
+		painel.add(adicionar);
+		adicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				row[0] = id.getText();
 				row[1] = new SimpleDateFormat("dd/MM/yyyy").format(date_chooser.getDate());
@@ -100,11 +133,18 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 			}
 		});
 
-		salvar = new JButton("Salvar");
-		salvar.setBounds(20, 430, 120, 30);
-		salvar.setFocusable(false);
-		painel.add(salvar);
-		salvar.addActionListener(this);
+		limpar = new JButton();
+		limpar.setBounds(300, 430, 120, 20);
+		limpar.setFocusable(false);
+		painel.add(limpar);
+		limpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				id.setText(null);
+				date_chooser.setDate(null);
+				equipamento.setText(null);
+				valor.setText("R$");
+			}
+		});
 
 		// Labels;
 		JLabel labelID = new JLabel("ID: ");
