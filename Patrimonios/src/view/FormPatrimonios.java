@@ -1,13 +1,9 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -31,47 +27,46 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 	private JTextArea texto;
 	private JTextField id, equipamento;
 	private JFormattedTextField data, valor;
-	private JButton salvar, Cancelar, adicionar, alterar, excluir, listarPeriodo;
+	private JButton salvar, cancelar, adicionar, alterar, excluir, listarPeriodo;
 
 	FormPatrimonios() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Registro de Patrimonio");
-		setSize(800, 800);
+		setTitle("Registro de Patrimônio");
+		setSize(750, 700);
 		painel = new JPanel();
 		setContentPane(painel);
 		setLocationRelativeTo(null);
 		setLayout(null);
 		
-		//texto = new JTextArea(listar());
-		//texto.setEditable(false);
-		//texto.setBounds(20, 20, 400, 400);
-		//texto.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
-		//painel.add(texto);
+		texto = new JTextArea(listar());
+		texto.setEditable(false);
+		texto.setBounds(170, 170, 350, 300);
+		texto.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		painel.add(texto);
 
 		salvar = new JButton("Salvar");
-		salvar.setBounds(20, 430, 120, 30);
+		salvar.setBounds(500, 115, 100, 30);
 		painel.add(salvar);	
 		salvar.addActionListener(this);
 
-		JLabel labelID = new JLabel("ID: ");
-		labelID.setBounds(40, 120, 100, 20);
+		JLabel labelID = new JLabel("Id:");
+		labelID.setBounds(60, 90, 120, 20);
 		painel.add(labelID);
 		
-	
-		JLabel labelData = new JLabel("Data: ");
-		labelData.setBounds(40, 160, 100, 20);
+		JLabel labelData = new JLabel("Data:");
+		labelData.setBounds(290, 90, 100, 20);
 		painel.add(labelData);
 		
-		JLabel labelEquipamento = new JLabel("Equipamento: ");
-		labelEquipamento.setBounds(40, 200, 100, 20);
+		JLabel labelEquipamento = new JLabel("Equipamento:");
+		labelEquipamento.setBounds(153, 90, 100, 20);
 		painel.add(labelEquipamento);
 		
-		JLabel labelValor = new JLabel("Valor: ");
-		labelValor.setBounds(40, 240, 100, 20);
+		JLabel labelValor = new JLabel("Valor:");
+		labelValor.setBounds(405, 90, 100, 20);
 		painel.add(labelValor);
 		
 		id = new JTextField();
-		id.setBounds(130, 120, 100, 20);
+		id.setBounds(20, 120, 100, 20);
 		painel.add(id);
 		
 		MaskFormatter mascaraData = null;
@@ -82,13 +77,13 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		data = new JFormattedTextField(mascaraData);
-		data.setBounds(130, 160, 100, 20);
+		data.setBounds(260, 120, 100, 20);
 		painel.add(data);
 		
 		equipamento = new JTextField();
-		equipamento.setBounds(130, 200, 100, 20);
+		equipamento.setBounds(140, 120, 100, 20);
 		painel.add(equipamento);
-		
+				
 		MaskFormatter mascaraValor = null;
 		try {
 			mascaraValor = new MaskFormatter("R$######");
@@ -96,7 +91,7 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 		valor = new JFormattedTextField(mascaraValor);
-		valor.setBounds(130, 240, 100, 20);
+		valor.setBounds(380, 120, 100, 20);
 		painel.add(valor);
 	}
 
@@ -107,7 +102,7 @@ public class FormPatrimonios extends JFrame implements ActionListener {
 	}
 	
 	private void adicionar() {
-		ProcessaPatrimonios.patrimonios.add(new ItemPatrimonio(Integer.parseInt(id.getText()), data.getText(), equipamento.getText(), Double.parseDouble(valor.getText())));
+		ProcessaPatrimonios.patrimonios.add(new ItemPatrimonio(Integer.parseInt(id.getText()),data.getText(), equipamento.getText(), Double.parseDouble(valor.getText())));
 		JOptionPane.showMessageDialog(this, "Salvo com sucesso");
 		texto.setText(listar());
 	}
