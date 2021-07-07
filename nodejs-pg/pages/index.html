@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/pages/style.css">
+    <title>Grupo 6 & Grupo </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Castoro&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="section">
+        <h1>Seja bem vindo ao cadastro de nosso sistema!</h1>
+        <form action="/add" method="POST">
+            <p>Username: </p>
+            <input type="text" name="titulo" minlength="6" maxlength="20" >
+            <p>Password: </p>
+            <input type="password" id="senha" name="conteudo" minlength="8" maxlength="20"><br>
+            <div class="alinhar">
+                <input style="padding-right: 5px;" type="checkbox" onclick="mostrarOcultarSenha()">Mostrar Senha
+                <script type="text/javascript" src="../script.js"></script> 
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </section>
+</body>
+</html>

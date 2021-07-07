@@ -1,9 +1,11 @@
 package model;
 
+import controller.ProcessaPatrimonios;
+
 public class ItemPatrimonio {
-	private int id;
 	private String data;
 	private String equipamento;
+	private int id;
 	private double valor;
 	
 	public ItemPatrimonio(){	
@@ -50,6 +52,14 @@ public class ItemPatrimonio {
 
 	@Override
 	public String toString() {
-		return id+ "\t" +  data + "\t" + equipamento + "\t" + valor + "\n";
+		return id + "\t" + data + "\t" + equipamento + "\t" + "R$" +  valor + "\n";
+	}
+	
+	public String toCsv() {
+		return id + ";" + data.replace("-", "/") + ";" + equipamento + ";" + valor + ";\n";
+	}
+
+	public String toTxt() {
+		return id + "\t" + data + "\t" + equipamento + "\t" + "R$" +  valor + "\n" + ProcessaPatrimonios.getValorTotal();
 	}
 }

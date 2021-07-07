@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import model.ItemPatrimonio;
 
 public class PatrimonioDAO {
@@ -24,8 +23,7 @@ public class PatrimonioDAO {
 			String line = "";
 			while ((line = br.readLine()) != null) {
 				String[] line_true = line.split(";");
-				item = new ItemPatrimonio(Integer.valueOf(line_true[0]),line_true[1], line_true[2],
-						Double.parseDouble(line_true[3]));
+				item = new ItemPatrimonio(Integer.valueOf(line_true[0]), line_true[1], line_true[2], Double.parseDouble(line_true[3]));
 				itens.add(item);
 			}
 			br.close();
@@ -38,8 +36,8 @@ public class PatrimonioDAO {
 	public static boolean salvar(ArrayList<ItemPatrimonio> it) {
 		try {
 			bw = new BufferedWriter(new FileWriter(arquivo, false));
-			for (ItemPatrimonio i : it) {
-				bw.write(i.toString());
+			for (ItemPatrimonio i: it) {
+				bw.write(i.toCsv());
 			}
 			bw.close();
 			return true;
@@ -49,5 +47,17 @@ public class PatrimonioDAO {
 		}
 	}
 	
-
+	public static boolean salvarTxt(ArrayList<ItemPatrimonio> it) {
+		try {
+			bw = new BufferedWriter(new FileWriter("./bd/dados.txt", false));
+			for (ItemPatrimonio i: it) {
+				bw.write(i.toTxt());
+			}
+			bw.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e);
+			return false;
+		}
+	}
 }
